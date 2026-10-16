@@ -63,14 +63,16 @@ This Soroban implementation makes Ethos-Protocol:
 
 ### Local Development Setup (Docker)
 
-For fastest local setup, use Docker Compose:
+For fastest local setup, use Docker Compose. First create a git-ignored `.env` with a local database password (Compose refuses to start without one):
 
 ```bash
+cp .env.example .env
+# set POSTGRES_PASSWORD in .env, e.g. the output of: openssl rand -base64 32
 docker-compose up -d
 ```
 
 This will start:
-- **PostgreSQL** on `localhost:5432`
+- **PostgreSQL** (not published to the host; reachable from other containers at `db:5432`)
 - **Backend** on `localhost:3000`
 - **Stellar Quickstart** on `localhost:8000`
 
