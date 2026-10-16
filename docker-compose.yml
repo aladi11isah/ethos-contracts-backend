@@ -36,6 +36,9 @@ services:
       NODE_ID: backend-primary
       CONSENSUS_STRATEGY: last_write_wins
       RUST_LOG: info
+      # SQLite file on the named volume below. Survives `docker compose down`
+      # (use `down -v` to delete it).
+      DB_PATH: /var/lib/ethos-protocol/ethos-protocol.db
     ports:
       - "3000:3000"
     depends_on:
@@ -45,6 +48,7 @@ services:
         condition: service_healthy
     volumes:
       - ./backend/src:/app/src
+      - ethos_data:/var/lib/ethos-protocol
 
   redis:
     image: redis:7-alpine
@@ -70,4 +74,5 @@ services:
 
 volumes:
   postgres_data:
+  ethos_data:
   quickstart_data:
